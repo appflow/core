@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"strictPropertyInitialization": false,
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution":	"Node", /* Support swallow paths 'index' */
+		"declaration": true,
+		"declarationMap": false,
+		"baseUrl": "./",
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist"]
+}

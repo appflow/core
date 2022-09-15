@@ -1,0 +1,46 @@
+{
+	"name": "@appsflow/core",
+	"version": "0.0.0-alpha.2",
+	"description": "AppFlow core",
+	"scripts": {
+		"test": "export flow_modules_logger=off && jest",
+		"build": "rollup -c",
+		"watch": "rollup -c -w"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/appflow/core.git"
+	},
+	"keywords": [
+		"appflow"
+	],
+	"author": "Leonid Vinikov <czf.leo123@gmail.com> (https://github.com/iNewLegend)",
+	"license": "MIT",
+	"files": [
+		"dist",
+		"src",
+		"types"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"types": "types/index.d.ts",
+	"devDependencies": {
+		"@babel/core": "^7.18.10",
+		"@babel/plugin-transform-runtime": "^7.18.10",
+		"@babel/preset-env": "^7.18.10",
+		"@babel/preset-typescript": "^7.18.6",
+		"@rollup/plugin-babel": "^5.3.1",
+		"@rollup/plugin-json": "^4.1.0",
+		"@rollup/plugin-node-resolve": "^13.3.0",
+		"@rollup/plugin-replace": "^4.0.0",
+		"@types/jest": "^28.1.6",
+		"@typescript-eslint/eslint-plugin": "^5.32.0",
+		"@typescript-eslint/parser": "^5.32.0",
+		"babel-jest": "^28.1.3",
+		"rollup": "^2.77.2",
+		"rollup-plugin-terser": "^7.0.2",
+		"rollup-plugin-typescript2": "^0.32.1",
+		"ts-jest": "^28.0.7"
+	}
+}
