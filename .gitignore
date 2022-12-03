@@ -1,6 +1,8 @@
-node_modules
-dist
-
 .DS_Store
-
 .idea/
+
+dist
+es
+lib
+node_modules
+

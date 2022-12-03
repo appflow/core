@@ -1,6 +1,6 @@
 {
 	"name": "@appsflow/core",
-	"version": "0.0.0-alpha.2",
+	"version": "0.0.0-alpha.7",
 	"description": "AppFlow core",
 	"scripts": {
 		"test": "export flow_modules_logger=off && jest",
@@ -16,10 +16,15 @@
 	],
 	"author": "Leonid Vinikov <czf.leo123@gmail.com> (https://github.com/iNewLegend)",
 	"license": "MIT",
+	"main": "lib/appflow-core.js",
+	"unpkg": "dist/appflow-core.js",
+	"module": "es/appflow-core.js.js",
 	"files": [
 		"dist",
+		"lib",
 		"src",
-		"types"
+		"types",
+		"es"
 	],
 	"publishConfig": {
 		"access": "public"
@@ -27,7 +32,7 @@
 	"types": "types/index.d.ts",
 	"devDependencies": {
 		"@babel/core": "^7.18.10",
-		"@babel/plugin-transform-runtime": "^7.18.10",
+		"@babel/plugin-transform-runtime": "^7.19.6",
 		"@babel/preset-env": "^7.18.10",
 		"@babel/preset-typescript": "^7.18.6",
 		"@rollup/plugin-babel": "^5.3.1",
@@ -42,5 +47,8 @@
 		"rollup-plugin-terser": "^7.0.2",
 		"rollup-plugin-typescript2": "^0.32.1",
 		"ts-jest": "^28.0.7"
+	},
+	"dependencies": {
+		"@babel/runtime": "^7.20.6"
 	}
 }

@@ -15,14 +15,14 @@ if ( globalThis?.$flow ) {
 }
 
 // API Config.
-export const config = {
+const config = {
     // @ts-ignore
     ... globalThis?.$flowConfig, // Injecting config to the API.
 
     version: pkg.version,
 }
 
-export const API = {
+const API = {
     config,
 
     commandBases: () => commandBases,
@@ -41,3 +41,5 @@ if ( ! globalThis?.$flow ) globalThis.$flow = API;
 declare global {
     const $flow: typeof API;
 }
+
+export default API;

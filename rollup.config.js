@@ -6,16 +6,45 @@ import typescript from 'rollup-plugin-typescript2'
 import { terser } from 'rollup-plugin-terser'
 import json from '@rollup/plugin-json';
 
-const extensions = [ '.ts' ];
+import pkg from './package.json'
+
+const extensions = [ '.ts' ],
+	babelRuntimeVersion = pkg.dependencies[ '@babel/runtime' ].replace(
+		/^[^0-9]*/,
+		''
+	),
+	externalName = 'appflow-core',
+	input = 'src/index.ts';
 
 export default defineConfig( [
+
+	// CommonJS
+	{
+		input,
+		output: { file: `lib/${externalName}.js`, format: 'cjs', indent: false, exports: 'auto' },
+		plugins: [
+			json(),
+			nodeResolve( {
+				extensions
+			} ),
+			typescript( { useTsconfigDeclarationDir: true } ),
+			babel( {
+				extensions,
+				plugins: [
+					[ '@babel/plugin-transform-runtime', { version: babelRuntimeVersion } ],
+				],
+				babelHelpers: 'runtime'
+			} )
+		]
+	},
+
 	// UMD Development
 	{
-		input: 'src/index.ts',
+		input,
 		output: {
-			file: 'dist/appflow-core.js',
+			file: `dist/${externalName}.js`,
 			format: 'umd',
-			name: 'core',
+			name: externalName,
 			indent: false,
 		},
 		plugins: [
@@ -23,7 +52,7 @@ export default defineConfig( [
 			nodeResolve( {
 				extensions
 			} ),
-			typescript( ),
+			typescript(),
 			babel( {
 				extensions,
 				exclude: 'node_modules/**',
@@ -38,11 +67,11 @@ export default defineConfig( [
 
 	// UMD Production
 	{
-		input: 'src/index.ts',
+		input,
 		output: {
-			file: 'dist/appflow-core.min.js',
+			file: `dist/${externalName}.min.js`,
 			format: 'umd',
-			name: 'AppFlow-core',
+			name: externalName,
 			indent: false,
 		},
 		plugins: [
@@ -70,4 +99,59 @@ export default defineConfig( [
 			} )
 		]
 	},
-] );
+
+	// ES
+	{
+		input,
+		output: { file: `es/${externalName}.js`, format: 'es', indent: false },
+		plugins: [
+			json(),
+			nodeResolve( {
+				extensions
+			} ),
+			typescript(),
+			babel( {
+				extensions,
+				plugins: [
+					[
+						'@babel/plugin-transform-runtime',
+						{
+							version: babelRuntimeVersion,
+							useESModules: true
+						}
+					],
+				],
+				babelHelpers: 'runtime'
+			} )
+		]
+	},
+
+	// ES for Browsers
+	{
+		input,
+		output: { file: `es/${externalName}.mjs`, format: 'es', indent: false },
+		plugins: [
+			json(),
+			nodeResolve( {
+				extensions
+			} ),
+			replace( {
+				preventAssignment: true,
+				'process.env.NODE_ENV': JSON.stringify( 'production' )
+			} ),
+			typescript(),
+			babel( {
+				extensions,
+				exclude: 'node_modules/**',
+				skipPreflightCheck: true,
+				babelHelpers: 'bundled'
+			} ),
+			terser( {
+				compress: {
+					pure_getters: true,
+					unsafe: true,
+					unsafe_comps: true
+				}
+			} )
+		]
+	}, ] );
