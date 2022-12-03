@@ -36,11 +36,10 @@ export abstract class CommandData extends CommandPublic {
             endpoint = endpoint.split( '/' ).map( ( endpointPart ) => {
                 const match = endpointPart.match( '\\{(.*?)\\}' );
 
-                if ( match?.length ) {
-                    if ( undefined !== typeof data[ match[ 1 ] ] ) {
-                        return data[ match[ 1 ] ];
-                    }
+                if ( match?.length && 'undefined' !== typeof data[ match[ 1 ] ] ) {
+                    return data[ match[ 1 ] ];
                 }
+
                 return endpointPart;
             } ).join( '/' );
         }
